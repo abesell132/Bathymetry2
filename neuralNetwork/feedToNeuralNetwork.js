@@ -318,7 +318,7 @@ module.exports = feedToNeuralNetwork = async (lakeImages) => {
           let index = await argMax.dataSync()[0];
           let label = await labelList[index];
           await console.log("Type: " + label);
-          await fs.writeFileSync("./file.log", "Type: " + label + " | " + imgX + " " + imgY + " " + startPixelX + " " + startPixelY);
+          await fs.appendFileSync("./file.log", "Type: " + label + " | " + imgX + " " + imgY + " " + startPixelX + " " + startPixelY);
         });
       }
       //     }
