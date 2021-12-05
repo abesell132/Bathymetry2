@@ -85,7 +85,7 @@ module.exports = feedToNeuralNetwork = async (lakeImages) => {
           let x = await startPixelX;
           let y = await startPixelY;
 
-          let m2m2 = await await [x - 2, y - 2]; // [0,0] -> [-2,-2]
+          let m2m2 = await [x - 2, y - 2]; // [0,0] -> [-2,-2]
           let zm2 = await [x, y - 2]; // [2,1]-> [0,-1]
           let p2m2 = await [x + 2, y - 2]; // [ 1919, 1] -> [1921,-1] -> [1, 0]
           let m1m1 = await [x - 1, y - 1];
@@ -310,6 +310,7 @@ module.exports = feedToNeuralNetwork = async (lakeImages) => {
                   p2p2Color.b,
                 ],
               ]);
+              const labelList = ["land", "water", "depthLine", "depthNumber"];
               let results = model.predict(input);
               let argMax = results.argMax(1);
               let index = argMax.dataSync()[0];
