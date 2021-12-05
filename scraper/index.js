@@ -1,6 +1,7 @@
 const puppeteer = require("puppeteer");
 const fs = require("fs");
 
+let photoPaths = [];
 /* Helper Functions */
 function setURL(lat, lng) {
   return `https://fishing-app.gpsnauticalcharts.com/i-boating-fishing-web-app/fishing-marine-charts-navigation.html?title=Greenwood+Greenwood+%2CReservoir+boating+app#${scraper.zoom}/${lat}/${lng}`;
@@ -8,10 +9,12 @@ function setURL(lat, lng) {
 function sleep(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
+
 function screenshot(lakeName) {
   return new Promise(async (resolve) => {
     let path = `./lakes/${lakeName.replace(" ", "")}/lake${scraper.rowCount}-${scraper.columnCount}.png`;
     scraper.page.screenshot({ path }).then(async () => {
+      photoPaths.push(path);
       await resolve();
     });
   });
@@ -62,7 +65,11 @@ module.exports = scraper = {
     });
     scraper.page = await scraper.browser.newPage();
 
-    return await photographLake(name, startPos.lat, startPos.lng, true);
+    await console.time(`Row ${scraper.rowCount}`);
+    await photographLake(name, startPos.lat, startPos.lng, true);
+    await console.timeEnd(`Row ${scraper.rowCount}`);
+
+    return photoPaths;
   },
 };
 
@@ -86,15 +93,17 @@ async function photographLake(name, lat, lng, isFirst) {
     await screenshot(name);
 
     if (scraper.currentPos.lat <= scraper.endPos.lat && scraper.currentPos.lng >= scraper.endPos.lng) {
-      return [scraper.rowCount, scraper.columnCount];
+      return;
     }
 
     if (scraper.rowDirection === "right") {
       // if we are at the end of the row, move down and change direction
       if (scraper.currentPos.lng >= scraper.endPos.lng) {
         scraper.rowDirection = "left";
+        await console.timeEnd(`Row ${scraper.rowCount}`);
         await moveMap("down");
         await scraper.rowCount++;
+        await console.time(`Row ${scraper.rowCount}`);
       } else {
         await moveMap("right");
         await scraper.columnCount++;
@@ -103,15 +112,16 @@ async function photographLake(name, lat, lng, isFirst) {
       // if we are at the end of the row, move down and change direction
       if (scraper.currentPos.lng <= scraper.startPos.lng) {
         scraper.rowDirection = "right";
+        await console.timeEnd(`Row ${scraper.rowCount}`);
         await moveMap("down");
         await scraper.rowCount++;
+        await console.time(`Row ${scraper.rowCount}`);
       } else {
         await moveMap("left");
         await scraper.columnCount--;
       }
     }
 
-    await console.log(`Row: ${scraper.rowCount}, Column: ${scraper.columnCount}`);
     await photographLake(name, scraper.currentPos.lat, scraper.currentPos.lng);
   } catch (e) {
     console.log(e);
