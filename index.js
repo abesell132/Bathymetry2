@@ -1,7 +1,6 @@
 const { loadBaseImage, getLabeledTrainingPixels } = require("./training");
 const { scrapeLake } = require("./scraper");
 const utils = require("./utils");
-// const tf = require("@tensorflow/tfjs-node-gpu");
 
 async function start() {
   const lake = "Greenwood Reservoir";
@@ -31,6 +30,7 @@ async function start() {
   await console.timeEnd("Parsing Training Data...");
 
   if (process.env.NODE_ENV === "proxmox") {
+    const tf = require("@tensorflow/tfjs-node-gpu");
     const { createModel, trainModel } = require("./neuralNetwork");
 
     await console.time("Creating Model...");
