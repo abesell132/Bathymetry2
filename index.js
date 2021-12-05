@@ -46,8 +46,10 @@ async function start() {
     await console.timeEnd("Training model...");
   }
 
+  await console.time("Scraping Lake...");
   let asdf = await scrapeLake(lake, startPos, endPos);
   await console.log(asdf);
+  await console.timeEnd("Scraping Lake...");
 }
 
 start();
