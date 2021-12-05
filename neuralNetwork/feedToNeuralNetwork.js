@@ -4,6 +4,8 @@ const path = require("path");
 module.exports = feedToNeuralNetwork = async (lakeImages) => {
   let { imageDir, totalCol, totalRow } = lakeImages;
 
+  let predictions = [];
+
   //   for (let imgY = 1; imgY < totalRow; imgY++) {
   //     for (let imgX = 1; imgX < totalCol; imgX++) {
   let imgY = 1;
@@ -317,9 +319,10 @@ module.exports = feedToNeuralNetwork = async (lakeImages) => {
           let argMax = results.argMax(1);
           let index = argMax.dataSync()[0];
           let label = labelList[index];
-          console.log("Type: " + label);
+          console.log(predictions.length);
           fs.appendFileSync("./file.log", "Type: " + label + " | " + imgX + " " + imgY + " " + startPixelX + " " + startPixelY);
         });
+        awaitpredictions.push(label);
       }
       //     }
       //   }
