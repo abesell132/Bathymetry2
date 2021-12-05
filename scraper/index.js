@@ -110,6 +110,7 @@ async function photographLake(name, lat, lng, isFirst) {
       }
     }
 
+    await console.log(`Row: ${scraper.rowCount}, Column: ${scraper.columnCount}`);
     await photographLake(name, scraper.currentPos.lat, scraper.currentPos.lng);
   } catch (e) {
     console.log(e);
