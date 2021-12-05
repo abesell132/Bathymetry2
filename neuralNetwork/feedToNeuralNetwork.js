@@ -255,8 +255,8 @@ module.exports = feedToNeuralNetwork = async (lakeImages) => {
       if (process.env.NODE_ENV == "proxmox") {
         const tf = require("@tensorflow/tfjs-node-gpu");
         const model = await tf.loadLayersModel(`file://${path.join(__dirname, "../model/model.json")}`);
-        await tf.tidy(async () => {
-          const input = await tf.tensor2d([
+        await tf.tidy(() => {
+          const input = tf.tensor2d([
             [
               m2m2Color.r,
               m2m2Color.g,
@@ -313,12 +313,12 @@ module.exports = feedToNeuralNetwork = async (lakeImages) => {
           ]);
           const fs = require("fs");
           const labelList = ["land", "water", "depthLine", "depthNumber"];
-          let results = await model.predict(input);
-          let argMax = await results.argMax(1);
-          let index = await argMax.dataSync()[0];
-          let label = await labelList[index];
-          await console.log("Type: " + label);
-          await fs.appendFileSync("./file.log", "Type: " + label + " | " + imgX + " " + imgY + " " + startPixelX + " " + startPixelY);
+          let results = model.predict(input);
+          let argMax = results.argMax(1);
+          let index = argMax.dataSync()[0];
+          let label = labelList[index];
+          console.log("Type: " + label);
+          fs.appendFileSync("./file.log", "Type: " + label + " | " + imgX + " " + imgY + " " + startPixelX + " " + startPixelY);
         });
       }
       //     }
