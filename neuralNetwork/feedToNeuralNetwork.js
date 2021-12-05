@@ -13,7 +13,7 @@ module.exports = feedToNeuralNetwork = async (lakeImages) => {
       let endPixelY = 936;
 
       if (imgX == 1) startPixelX = 3;
-      if (imgX == totalX) endPixelX = 1916;
+      if (imgX == totalCol) endPixelX = 1916;
       if (imgY == 1) startPixelY = 3;
       if (imgY == totalY) endPixelY = 933;
 
