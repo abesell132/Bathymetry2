@@ -4,9 +4,9 @@ const { scrapeLake } = require("./scraper");
 const utils = require("./utils");
 
 async function start() {
-  const lake = "Teal Lake";
-  const startPos = { lat: 46.51824, lng: -87.65525 };
-  const endPos = { lat: 46.50696, lng: -87.61136 };
+  const lake = "Lake Angeline";
+  const startPos = { lat: 46.48233, lng: -87.66903 };
+  const endPos = { lat: 46.47643, lng: -87.65507 };
 
   await console.time("Loading Base Image...");
   const baseImage = await loadBaseImage();
