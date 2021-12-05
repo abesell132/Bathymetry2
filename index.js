@@ -18,7 +18,7 @@ async function start() {
   }
 
   if (process.env.NODE_ENV === "proxmox") {
-    const { createModel, trainModel } = require("./NeuralNetwork");
+    const { createModel, trainModel } = require("./neuralNetwork");
 
     const model = await createModel();
     let inputs = await tf.tensor2d(colors);
