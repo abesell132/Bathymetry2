@@ -1,4 +1,5 @@
 const Jimp = require("jimp");
+const path = require("path");
 
 module.exports = feedToNeuralNetwork = async (lakeImages) => {
   let { imageDir, totalCol, totalRow } = lakeImages;
@@ -249,7 +250,7 @@ module.exports = feedToNeuralNetwork = async (lakeImages) => {
 
           if (process.env.NODE_ENV == "proxmox") {
             const tf = require("@tensorflow/tfjs-node-gpu");
-            const model = await tf.loadLayersModel(`file://${__dirname}/model/model.json`);
+            const model = await tf.loadLayersModel(`file://${path.join(__dirname, "../model/model.json")}`);
             tf.tidy(() => {
               const input = tf.tensor2d([
                 [
