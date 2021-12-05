@@ -186,13 +186,13 @@ module.exports = feedToNeuralNetwork = async (lakeImages) => {
           if (p1z[0] > 1919) {
             p1zColor = Jimp.intToRGBA(nearbyImages[1][2].getPixelColor(p1z[0] - 1920, p1z[1]));
           } else {
-            p1zColor = Jimp.intToRGBA(nearbyImages[0][2].getPixelColor(p1z[0], p1z[1]));
+            p1zColor = Jimp.intToRGBA(nearbyImages[1][1].getPixelColor(p1z[0], p1z[1]));
           }
 
           if (p2z[0] > 1919) {
             p2zColor = Jimp.intToRGBA(nearbyImages[1][2].getPixelColor(p2z[0] - 1920, p2z[1]));
           } else {
-            p2zColor = Jimp.intToRGBA(nearbyImages[0][2].getPixelColor(p2z[0], p2z[1]));
+            p2zColor = Jimp.intToRGBA(nearbyImages[1][1].getPixelColor(p2z[0], p2z[1]));
           }
 
           if (m1p1[0] < 0 && m1p1[1] > 937) {
