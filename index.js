@@ -1,5 +1,6 @@
 const { loadBaseImage, getLabeledTrainingPixels } = require("./training");
 const utils = require("./utils");
+const tf = require("@tensorflow/tfjs-node-gpu");
 
 async function start() {
   await console.clear();
