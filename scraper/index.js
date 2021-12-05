@@ -1,7 +1,6 @@
 const puppeteer = require("puppeteer");
 const fs = require("fs");
 
-let photoPaths = [];
 /* Helper Functions */
 function setURL(lat, lng) {
   return `https://fishing-app.gpsnauticalcharts.com/i-boating-fishing-web-app/fishing-marine-charts-navigation.html?title=Greenwood+Greenwood+%2CReservoir+boating+app#${scraper.zoom}/${lat}/${lng}`;
@@ -14,7 +13,6 @@ function screenshot(lakeName) {
   return new Promise(async (resolve) => {
     let path = `./lakes/${lakeName.replace(" ", "")}/lake${scraper.rowCount}-${scraper.columnCount}.png`;
     scraper.page.screenshot({ path }).then(async () => {
-      photoPaths.push(path);
       await resolve();
     });
   });
@@ -40,6 +38,7 @@ function moveMap(direction) {
 module.exports = scraper = {
   browser: null,
   page: null,
+  lakePath: null,
   startPos: null,
   endPos: null,
   currentPos: null,
@@ -49,12 +48,16 @@ module.exports = scraper = {
   zoom: 20,
   xDelta: 0.00128,
   yDelta: 0.00043,
+  xCount: null,
+  yCount: null,
 
   scrapeLake: async function (name, startPos, endPos) {
     scraper.startPos = startPos;
     scraper.endPos = endPos;
-
     scraper.currentPos = startPos;
+
+    scraper.xCount = Math.floor(Math.abs((startPos.lng - endPos.lng) / scraper.xDelta)) + 2;
+    scraper.yCount = Math.floor((startPos.lat - endPos.lat) / scraper.yDelta) + 2;
 
     scraper.browser = await puppeteer.launch({
       defaultViewport: {
@@ -69,13 +72,14 @@ module.exports = scraper = {
     await photographLake(name, startPos.lat, startPos.lng, true);
     await console.timeEnd(`Row ${scraper.rowCount}`);
 
-    return photoPaths;
+    return { imageDir: scraper.lakePath, totalCol: scraper.rowCount, totalRow: scraper.columnCount };
   },
 };
 
 async function photographLake(name, lat, lng, isFirst) {
-  if (!(await fs.existsSync(`./lakes/${name.replace(" ", "")}`))) {
-    await fs.mkdirSync(`./lakes/${name.replace(" ", "")}`);
+  scraper.lakePath = `./lakes/${name.replace(" ", "")}`;
+  if (!(await fs.existsSync(scraper.lakePath))) {
+    await fs.mkdirSync(scraper.lakePath);
   }
 
   try {

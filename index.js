@@ -1,11 +1,12 @@
 const { loadBaseImage, getLabeledTrainingPixels } = require("./training");
+const { feedToNeuralNetwork } = require("./neuralNetwork/feedToNeuralNetwork");
 const { scrapeLake } = require("./scraper");
 const utils = require("./utils");
 
 async function start() {
-  const lake = "Greenwood Reservoir";
-  const startPos = { lat: 46.47745, lng: -87.8547 };
-  const endPos = { lat: 46.44036, lng: -87.7958 };
+  const lake = "Teal Lake";
+  const startPos = { lat: 46.51824, lng: -87.65525 };
+  const endPos = { lat: 46.50696, lng: -87.61136 };
 
   await console.time("Loading Base Image...");
   const baseImage = await loadBaseImage();
@@ -49,9 +50,10 @@ async function start() {
   }
 
   await console.time("Scraping Lake...");
-  let lakePhotoPaths = await scrapeLake(lake, startPos, endPos);
-  await console.log(lakePhotoPaths);
+  let lakeImages = await scrapeLake(lake, startPos, endPos);
   await console.timeEnd("Scraping Lake...");
+
+  await feedToNeuralNetwork(lakeImages);
 }
 
 start();
