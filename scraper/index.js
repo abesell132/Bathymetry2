@@ -40,6 +40,7 @@ module.exports = scraper = {
   startPos: null,
   endPos: null,
   currentPos: null,
+  rowDirection: "right",
   rowCount: 1,
   columnCount: 1,
   zoom: 20,
@@ -66,7 +67,6 @@ module.exports = scraper = {
 };
 
 async function photographLake(name, lat, lng, isFirst) {
-  let rowDirection = "right";
   if (!(await fs.existsSync(`./lakes/${name.replace(" ", "")}`))) {
     await fs.mkdirSync(`./lakes/${name.replace(" ", "")}`);
   }
@@ -89,10 +89,10 @@ async function photographLake(name, lat, lng, isFirst) {
       return [scraper.rowCount, scraper.columnCount];
     }
 
-    if (rowDirection === "right") {
+    if (scraper.rowDirection === "right") {
       // if we are at the end of the row, move down and change direction
       if (scraper.currentPos.lng >= scraper.endPos.lng) {
-        rowDirection = "left";
+        scraper.rowDirection = "left";
         await moveMap("down");
         await scraper.rowCount++;
       } else {
@@ -102,7 +102,7 @@ async function photographLake(name, lat, lng, isFirst) {
     } else {
       // if we are at the end of the row, move down and change direction
       if (scraper.currentPos.lng <= scraper.startPos.lng) {
-        rowDirection = "right";
+        scraper.rowDirection = "right";
         await moveMap("down");
         await scraper.rowCount++;
       } else {
