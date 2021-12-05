@@ -78,6 +78,7 @@ module.exports = feedToNeuralNetwork = async (lakeImages) => {
 
       for (let a; startPixelY < endPixelY; startPixelY++) {
         for (let b; startPixelX < endPixelX; startPixelX++) {
+          console.log(imgX, imgY, startPixelX, startPixelY);
           let x = startPixelX;
           let y = startPixelY;
 
