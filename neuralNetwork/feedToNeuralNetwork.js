@@ -82,8 +82,8 @@ module.exports = feedToNeuralNetwork = async (lakeImages) => {
   await console.timeEnd("load images");
 
   for (let a; startPixelY < endPixelY; startPixelY++) {
+    console.log(startPixelY);
     for (let b; startPixelX < endPixelX; startPixelX++) {
-      await console.log(imgX, imgY, startPixelX, startPixelY);
       let x = await startPixelX;
       let y = await startPixelY;
 
@@ -311,12 +311,14 @@ module.exports = feedToNeuralNetwork = async (lakeImages) => {
               p2p2Color.b,
             ],
           ]);
+          const fs = require("fs");
           const labelList = ["land", "water", "depthLine", "depthNumber"];
           let results = model.predict(input);
           let argMax = results.argMax(1);
           let index = argMax.dataSync()[0];
           let label = labelList[index];
           console.log("Type: " + label);
+          fs.writeFileSync("./file.log", "Type: " + label + " | " + imgX + " " + imgY + " " + startPixelX + " " + startPixelY);
         });
       }
       //     }
