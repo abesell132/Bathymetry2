@@ -1,6 +1,6 @@
 const tf = require("@tensorflow/tfjs-node-gpu");
 
-module.exports = {
+module.exports = NeuralNetwork = {
   createModel: function (LEARNING_RATE = 0.1) {
     const optimizer = tf.train.sgd(LEARNING_RATE);
 
