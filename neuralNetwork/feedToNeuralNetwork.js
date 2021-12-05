@@ -253,7 +253,6 @@ module.exports = feedToNeuralNetwork = async (lakeImages) => {
           if (process.env.NODE_ENV == "proxmox") {
             const tf = require("@tensorflow/tfjs-node-gpu");
             const model = await tf.loadLayersModel(`file://${path.join(__dirname, "../model/model.json")}`);
-            await console.log("asdf");
             await tf.tidy(() => {
               const input = tf.tensor2d([
                 [
