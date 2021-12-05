@@ -1,7 +1,7 @@
 const { loadBaseImage, getLabeledTrainingPixels } = require("./training");
 const { scrapeLake } = require("./scraper");
 const utils = require("./utils");
-// const tf = require("@tensorflow/tfjs-node-gpu");
+const tf = require("@tensorflow/tfjs-node-gpu");
 
 async function start() {
   const lake = "Greenwood Reservoir";
