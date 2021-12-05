@@ -75,31 +75,33 @@ module.exports = feedToNeuralNetwork = async (lakeImages) => {
         nearbyImages[2][2] = imageDir + "/lake" + (imgY + 1) + "-" + (imgX + 1) + ".png";
       }
 
+      await console.time("load images");
       nearbyImages = await loadNearbyImages(nearbyImages);
+      await console.timeEnd("load images");
 
       for (let a; startPixelY < endPixelY; startPixelY++) {
         for (let b; startPixelX < endPixelX; startPixelX++) {
           await console.log(imgX, imgY, startPixelX, startPixelY);
-          let x = startPixelX;
-          let y = startPixelY;
+          let x = await startPixelX;
+          let y = await startPixelY;
 
-          let m2m2 = [x - 2, y - 2]; // [0,0] -> [-2,-2]
-          let zm2 = [x, y - 2]; // [2,1]-> [0,-1]
-          let p2m2 = [x + 2, y - 2]; // [ 1919, 1] -> [1921,-1] -> [1, 0]
-          let m1m1 = [x - 1, y - 1];
-          let zm1 = [x, y - 1];
-          let p1m1 = [x + 1, y - 1];
-          let m2z = [x - 2, y];
-          let m1z = [x - 1, y];
-          let zz = [x, y];
-          let p1z = [x + 1, y];
-          let p2z = [x + 2, y];
-          let m1p1 = [x - 1, y + 1];
-          let zp1 = [x, y + 1];
-          let p1p1 = [x + 1, y + 1];
-          let m2p2 = [x - 2, y + 2];
-          let zp2 = [x, y + 2];
-          let p2p2 = [x + 2, y + 2];
+          let m2m2 = await await [x - 2, y - 2]; // [0,0] -> [-2,-2]
+          let zm2 = await [x, y - 2]; // [2,1]-> [0,-1]
+          let p2m2 = await [x + 2, y - 2]; // [ 1919, 1] -> [1921,-1] -> [1, 0]
+          let m1m1 = await [x - 1, y - 1];
+          let zm1 = await [x, y - 1];
+          let p1m1 = await [x + 1, y - 1];
+          let m2z = await [x - 2, y];
+          let m1z = await [x - 1, y];
+          let zz = await [x, y];
+          let p1z = await [x + 1, y];
+          let p2z = await [x + 2, y];
+          let m1p1 = await [x - 1, y + 1];
+          let zp1 = await [x, y + 1];
+          let p1p1 = await [x + 1, y + 1];
+          let m2p2 = await [x - 2, y + 2];
+          let zp2 = await [x, y + 2];
+          let p2p2 = await [x + 2, y + 2];
           let m2m2Color,
             zm2Color,
             p2m2Color,
@@ -119,133 +121,133 @@ module.exports = feedToNeuralNetwork = async (lakeImages) => {
             p2p2Color;
 
           if (m2m2[0] < 0 && m2m2[1] < 0) {
-            m2m2Color = Jimp.intToRGBA(nearbyImages[0][0].getPixelColor(1920 + m2m2[0], 937 + m2m2[1]));
+            m2m2Color = await Jimp.intToRGBA(nearbyImages[0][0].getPixelColor(1920 + m2m2[0], 937 + m2m2[1]));
           } else if (m2m2[0] < 0) {
-            m2m2Color = Jimp.intToRGBA(nearbyImages[1][0].getPixelColor(1920 + m2m2[0], m2m2[1]));
+            m2m2Color = await Jimp.intToRGBA(nearbyImages[1][0].getPixelColor(1920 + m2m2[0], m2m2[1]));
           } else if (m2m2[1] < 0) {
-            m2m2Color = Jimp.intToRGBA(nearbyImages[0][1].getPixelColor(m2m2[0], 937 + m2m2[1]));
+            m2m2Color = await Jimp.intToRGBA(nearbyImages[0][1].getPixelColor(m2m2[0], 937 + m2m2[1]));
           } else {
-            m2m2Color = Jimp.intToRGBA(nearbyImages[1][1].getPixelColor(m2m2[0], m2m2[1]));
+            m2m2Color = await Jimp.intToRGBA(nearbyImages[1][1].getPixelColor(m2m2[0], m2m2[1]));
           }
 
           if (zm2[1] < 0) {
-            zm2Color = Jimp.intToRGBA(nearbyImages[0][1].getPixelColor(zm2[0], 937 + zm2[1]));
+            zm2Color = await Jimp.intToRGBA(nearbyImages[0][1].getPixelColor(zm2[0], 937 + zm2[1]));
           } else {
-            zm2Color = Jimp.intToRGBA(nearbyImages[1][1].getPixelColor(zm2[0], zm2[1]));
+            zm2Color = await Jimp.intToRGBA(nearbyImages[1][1].getPixelColor(zm2[0], zm2[1]));
           }
 
           if (p2m2[0] > 1919 && p2m2[1] < 0) {
-            p2m2Color = Jimp.intToRGBA(nearbyImages[0][2].getPixelColor(p2m2[0] - 1920, 937 + p2m2[1]));
+            p2m2Color = await Jimp.intToRGBA(nearbyImages[0][2].getPixelColor(p2m2[0] - 1920, 937 + p2m2[1]));
           } else if (p2m2[0] > 1919) {
-            p2m2Color = Jimp.intToRGBA(nearbyImages[1][2].getPixelColor(p2m2[0] - 1920, p2m2[1]));
+            p2m2Color = await Jimp.intToRGBA(nearbyImages[1][2].getPixelColor(p2m2[0] - 1920, p2m2[1]));
           } else if (p2m2[1] < 0) {
-            p2m2Color = Jimp.intToRGBA(nearbyImages[0][1].getPixelColor(p2m2[0], 937 + p2m2[1]));
+            p2m2Color = await Jimp.intToRGBA(nearbyImages[0][1].getPixelColor(p2m2[0], 937 + p2m2[1]));
           } else {
-            p2m2Color = Jimp.intToRGBA(nearbyImages[1][1].getPixelColor(p2m2[0], p2m2[1]));
+            p2m2Color = await Jimp.intToRGBA(nearbyImages[1][1].getPixelColor(p2m2[0], p2m2[1]));
           }
 
           if (m1m1[0] < 0 && m1m1[1] < 0) {
-            m1m1Color = Jimp.intToRGBA(nearbyImages[0][0].getPixelColor(1920 + m1m1[0], 937 + m1m1[1]));
+            m1m1Color = await Jimp.intToRGBA(nearbyImages[0][0].getPixelColor(1920 + m1m1[0], 937 + m1m1[1]));
           } else if (m1m1[0] < 0) {
-            m1m1Color = Jimp.intToRGBA(nearbyImages[1][0].getPixelColor(1920 + m1m1[0], m1m1[1]));
+            m1m1Color = await Jimp.intToRGBA(nearbyImages[1][0].getPixelColor(1920 + m1m1[0], m1m1[1]));
           } else if (m1m1[1] < 0) {
-            m1m1Color = Jimp.intToRGBA(nearbyImages[0][1].getPixelColor(m1m1[0], 937 + m1m1[1]));
+            m1m1Color = await Jimp.intToRGBA(nearbyImages[0][1].getPixelColor(m1m1[0], 937 + m1m1[1]));
           } else {
-            m1m1Color = Jimp.intToRGBA(nearbyImages[1][1].getPixelColor(m1m1[0], m1m1[1]));
+            m1m1Color = await Jimp.intToRGBA(nearbyImages[1][1].getPixelColor(m1m1[0], m1m1[1]));
           }
 
           if (zm1[1] < 0) {
-            zm1Color = Jimp.intToRGBA(nearbyImages[0][1].getPixelColor(zm1[0], 937 + zm1[1]));
+            zm1Color = await Jimp.intToRGBA(nearbyImages[0][1].getPixelColor(zm1[0], 937 + zm1[1]));
           } else {
-            zm1Color = Jimp.intToRGBA(nearbyImages[1][1].getPixelColor(zm1[0], zm1[1]));
+            zm1Color = await Jimp.intToRGBA(nearbyImages[1][1].getPixelColor(zm1[0], zm1[1]));
           }
 
           if (p1m1[0] > 1919 && p1m1[1] < 0) {
-            p1m1Color = Jimp.intToRGBA(nearbyImages[0][2].getPixelColor(p1m1[0] - 1920, 937 + p1m1[1]));
+            p1m1Color = await Jimp.intToRGBA(nearbyImages[0][2].getPixelColor(p1m1[0] - 1920, 937 + p1m1[1]));
           } else if (p1m1[0] > 1919) {
-            p1m1Color = Jimp.intToRGBA(nearbyImages[1][2].getPixelColor(p1m1[0] - 1920, p1m1[1]));
+            p1m1Color = await Jimp.intToRGBA(nearbyImages[1][2].getPixelColor(p1m1[0] - 1920, p1m1[1]));
           } else if (p1m1[1] < 0) {
-            p1m1Color = Jimp.intToRGBA(nearbyImages[0][1].getPixelColor(p1m1[0], 937 + p1m1[1]));
+            p1m1Color = await Jimp.intToRGBA(nearbyImages[0][1].getPixelColor(p1m1[0], 937 + p1m1[1]));
           } else {
-            p1m1Color = Jimp.intToRGBA(nearbyImages[1][1].getPixelColor(p1m1[0], p1m1[1]));
+            p1m1Color = await Jimp.intToRGBA(nearbyImages[1][1].getPixelColor(p1m1[0], p1m1[1]));
           }
 
           if (m2z[0] < 0) {
-            m2zColor = Jimp.intToRGBA(nearbyImages[1][0].getPixelColor(1920 + m2z[0], m2z[1]));
+            m2zColor = await Jimp.intToRGBA(nearbyImages[1][0].getPixelColor(1920 + m2z[0], m2z[1]));
           } else {
-            m2zColor = Jimp.intToRGBA(nearbyImages[1][1].getPixelColor(m2z[0], m2z[1]));
+            m2zColor = await Jimp.intToRGBA(nearbyImages[1][1].getPixelColor(m2z[0], m2z[1]));
           }
 
           if (m1z[0] < 0) {
-            m1zColor = Jimp.intToRGBA(nearbyImages[1][0].getPixelColor(1920 + m1z[0], m1z[1]));
+            m1zColor = await Jimp.intToRGBA(nearbyImages[1][0].getPixelColor(1920 + m1z[0], m1z[1]));
           } else {
-            m1zColor = Jimp.intToRGBA(nearbyImages[1][1].getPixelColor(m1z[0], m1z[1]));
+            m1zColor = await Jimp.intToRGBA(nearbyImages[1][1].getPixelColor(m1z[0], m1z[1]));
           }
 
           zzColor = Jimp.intToRGBA(nearbyImages[1][1].getPixelColor(zz[0], zz[1]));
 
           if (p1z[0] > 1919) {
-            p1zColor = Jimp.intToRGBA(nearbyImages[1][2].getPixelColor(p1z[0] - 1920, p1z[1]));
+            p1zColor = await Jimp.intToRGBA(nearbyImages[1][2].getPixelColor(p1z[0] - 1920, p1z[1]));
           } else {
-            p1zColor = Jimp.intToRGBA(nearbyImages[1][1].getPixelColor(p1z[0], p1z[1]));
+            p1zColor = await Jimp.intToRGBA(nearbyImages[1][1].getPixelColor(p1z[0], p1z[1]));
           }
 
           if (p2z[0] > 1919) {
-            p2zColor = Jimp.intToRGBA(nearbyImages[1][2].getPixelColor(p2z[0] - 1920, p2z[1]));
+            p2zColor = await Jimp.intToRGBA(nearbyImages[1][2].getPixelColor(p2z[0] - 1920, p2z[1]));
           } else {
-            p2zColor = Jimp.intToRGBA(nearbyImages[1][1].getPixelColor(p2z[0], p2z[1]));
+            p2zColor = await Jimp.intToRGBA(nearbyImages[1][1].getPixelColor(p2z[0], p2z[1]));
           }
 
           if (m1p1[0] < 0 && m1p1[1] > 937) {
-            m1p1Color = Jimp.intToRGBA(nearbyImages[2][0].getPixelColor(1920 + m1p1[0], m1p1[1] - 937));
+            m1p1Color = await Jimp.intToRGBA(nearbyImages[2][0].getPixelColor(1920 + m1p1[0], m1p1[1] - 937));
           } else if (m1p1[0] < 0) {
-            m1p1Color = Jimp.intToRGBA(nearbyImages[1][0].getPixelColor(1920 + m1p1[0], m1p1[1]));
+            m1p1Color = await Jimp.intToRGBA(nearbyImages[1][0].getPixelColor(1920 + m1p1[0], m1p1[1]));
           } else if (m1p1[1] > 937) {
-            m1p1Color = Jimp.intToRGBA(nearbyImages[2][1].getPixelColor(m1p1[0], m1p1[1] - 937));
+            m1p1Color = await Jimp.intToRGBA(nearbyImages[2][1].getPixelColor(m1p1[0], m1p1[1] - 937));
           } else {
-            m1p1Color = Jimp.intToRGBA(nearbyImages[1][1].getPixelColor(m1p1[0], m1p1[1]));
+            m1p1Color = await Jimp.intToRGBA(nearbyImages[1][1].getPixelColor(m1p1[0], m1p1[1]));
           }
 
           if (zp1[1] > 937) {
-            zp1Color = Jimp.intToRGBA(nearbyImages[2][1].getPixelColor(zp1[0], zp1[1] - 937));
+            zp1Color = await Jimp.intToRGBA(nearbyImages[2][1].getPixelColor(zp1[0], zp1[1] - 937));
           } else {
-            zp1Color = Jimp.intToRGBA(nearbyImages[1][1].getPixelColor(zp1[0], zp1[1]));
+            zp1Color = await Jimp.intToRGBA(nearbyImages[1][1].getPixelColor(zp1[0], zp1[1]));
           }
 
           if (p1p1[0] > 1919 && p1p1[1] > 937) {
-            p1p1Color = Jimp.intToRGBA(nearbyImages[2][2].getPixelColor(p1p1[0] - 1920, p1p1[1] - 937));
+            p1p1Color = await Jimp.intToRGBA(nearbyImages[2][2].getPixelColor(p1p1[0] - 1920, p1p1[1] - 937));
           } else if (p1p1[0] > 1919) {
-            p1p1Color = Jimp.intToRGBA(nearbyImages[1][2].getPixelColor(p1p1[0] - 1920, p1p1[1]));
+            p1p1Color = await Jimp.intToRGBA(nearbyImages[1][2].getPixelColor(p1p1[0] - 1920, p1p1[1]));
           } else if (p1p1[1] > 937) {
-            p1p1Color = Jimp.intToRGBA(nearbyImages[2][1].getPixelColor(p1p1[0], p1p1[1] - 937));
+            p1p1Color = await Jimp.intToRGBA(nearbyImages[2][1].getPixelColor(p1p1[0], p1p1[1] - 937));
           } else {
-            p1p1Color = Jimp.intToRGBA(nearbyImages[1][1].getPixelColor(p1p1[0], p1p1[1]));
+            p1p1Color = await Jimp.intToRGBA(nearbyImages[1][1].getPixelColor(p1p1[0], p1p1[1]));
           }
 
           if (m2p2[0] < 0 && m2p2[1] > 937) {
-            m2p2Color = Jimp.intToRGBA(nearbyImages[2][0].getPixelColor(m2p2[0] + 1920, m2p2[1] - 937));
+            m2p2Color = await Jimp.intToRGBA(nearbyImages[2][0].getPixelColor(m2p2[0] + 1920, m2p2[1] - 937));
           } else if (m2p2[0] > 1919) {
-            m2p2Color = Jimp.intToRGBA(nearbyImages[1][0].getPixelColor(m2p2[0] + 1920, m2p2[1]));
+            m2p2Color = await Jimp.intToRGBA(nearbyImages[1][0].getPixelColor(m2p2[0] + 1920, m2p2[1]));
           } else if (m2p2[1] > 937) {
-            m2p2Color = Jimp.intToRGBA(nearbyImages[2][1].getPixelColor(m2p2[0], m2p2[1] - 937));
+            m2p2Color = await Jimp.intToRGBA(nearbyImages[2][1].getPixelColor(m2p2[0], m2p2[1] - 937));
           } else {
-            m2p2Color = Jimp.intToRGBA(nearbyImages[1][1].getPixelColor(m2p2[0], m2p2[1]));
+            m2p2Color = await Jimp.intToRGBA(nearbyImages[1][1].getPixelColor(m2p2[0], m2p2[1]));
           }
 
           if (zp2[1] > 937) {
-            zp2Color = Jimp.intToRGBA(nearbyImages[2][1].getPixelColor(zp2[0], zp2[1] - 937));
+            zp2Color = await Jimp.intToRGBA(nearbyImages[2][1].getPixelColor(zp2[0], zp2[1] - 937));
           } else {
-            zp2Color = Jimp.intToRGBA(nearbyImages[1][1].getPixelColor(zp2[0], zp2[1]));
+            zp2Color = await Jimp.intToRGBA(nearbyImages[1][1].getPixelColor(zp2[0], zp2[1]));
           }
 
           if (p2p2[0] > 1919 && p2p2[1] > 937) {
-            p2p2Color = Jimp.intToRGBA(nearbyImages[2][2].getPixelColor(p2p2[0] - 1920, p2p2[1] - 937));
+            p2p2Color = await Jimp.intToRGBA(nearbyImages[2][2].getPixelColor(p2p2[0] - 1920, p2p2[1] - 937));
           } else if (p2p2[0] > 1919) {
-            p2p2Color = Jimp.intToRGBA(nearbyImages[1][2].getPixelColor(p2p2[0] - 1920, p2p2[1]));
+            p2p2Color = await Jimp.intToRGBA(nearbyImages[1][2].getPixelColor(p2p2[0] - 1920, p2p2[1]));
           } else if (p2p2[1] > 937) {
-            p2p2Color = Jimp.intToRGBA(nearbyImages[2][1].getPixelColor(p2p2[0], p2p2[1] - 937));
+            p2p2Color = await Jimp.intToRGBA(nearbyImages[2][1].getPixelColor(p2p2[0], p2p2[1] - 937));
           } else {
-            p2p2Color = Jimp.intToRGBA(nearbyImages[1][1].getPixelColor(p2p2[0], p2p2[1]));
+            p2p2Color = await Jimp.intToRGBA(nearbyImages[1][1].getPixelColor(p2p2[0], p2p2[1]));
           }
 
           if (process.env.NODE_ENV == "proxmox") {
