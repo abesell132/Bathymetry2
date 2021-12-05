@@ -57,7 +57,7 @@ module.exports = scraper = {
         width: 1920,
         height: 937,
       },
-      executablePath: "/usr/bin/chromium-browser",
+      args: ["--no-sandbox"],
     });
     scraper.page = await scraper.browser.newPage();
 
