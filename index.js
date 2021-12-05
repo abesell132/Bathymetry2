@@ -1,5 +1,5 @@
 const { loadBaseImage, getLabeledTrainingPixels } = require("./training");
-const { feedToNeuralNetwork } = require("./neuralNetwork/feedToNeuralNetwork");
+const feedToNeuralNetwork = require("./neuralNetwork/feedToNeuralNetwork");
 const { scrapeLake } = require("./scraper");
 const utils = require("./utils");
 
