@@ -4,8 +4,8 @@ const path = require("path");
 module.exports = feedToNeuralNetwork = async (lakeImages) => {
   let { imageDir, totalCol, totalRow } = lakeImages;
 
-  for (let imgY = 1; imgY <= totalRow; imgY++) {
-    for (let imgX = 1; imgX <= totalCol; imgX++) {
+  for (let imgY = 1; imgY < totalRow; imgY++) {
+    for (let imgX = 1; imgX < totalCol; imgX++) {
       let currentImgPath = imageDir + "/lake" + imgY + "-" + imgX + ".png";
 
       let startPixelX = 0;
@@ -79,7 +79,7 @@ module.exports = feedToNeuralNetwork = async (lakeImages) => {
 
       for (let a; startPixelY < endPixelY; startPixelY++) {
         for (let b; startPixelX < endPixelX; startPixelX++) {
-          console.log(imgX, imgY, startPixelX, startPixelY);
+          await console.log(imgX, imgY, startPixelX, startPixelY);
           let x = startPixelX;
           let y = startPixelY;
 
@@ -251,7 +251,7 @@ module.exports = feedToNeuralNetwork = async (lakeImages) => {
           if (process.env.NODE_ENV == "proxmox") {
             const tf = require("@tensorflow/tfjs-node-gpu");
             const model = await tf.loadLayersModel(`file://${path.join(__dirname, "../model/model.json")}`);
-            tf.tidy(() => {
+            await tf.tidy(() => {
               const input = tf.tensor2d([
                 [
                   m2m2Color.r,
