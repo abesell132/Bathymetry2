@@ -103,6 +103,10 @@ module.exports = {
     let p2p2Color = Jimp.intToRGBA(p2p2);
 
     let neighborPixels = [];
+    neighborPixels.push(m2m2Color.r / 255);
+    neighborPixels.push(m2m2Color.g / 255);
+    neighborPixels.push(m2m2Color.b / 255);
+    neighborPixels.push(zm2Color.r / 255);
     neighborPixels.push(zm2Color.g / 255);
     neighborPixels.push(zm2Color.b / 255);
     neighborPixels.push(p2m2Color.r / 255);
