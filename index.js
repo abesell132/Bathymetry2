@@ -17,7 +17,7 @@ async function start() {
   await console.timeEnd("Retrieving Labeled Training Data...");
 
   await console.time("Parsing Training Data...");
-  const numTrainingPoints = 10000;
+  const numTrainingPoints = 20000;
   let colors = [];
   let labels = [];
   for (let a = 0; a < numTrainingPoints; a++) {
