@@ -1,8 +1,13 @@
 const { loadBaseImage, getLabeledTrainingPixels } = require("./training");
+const { scrapeLake } = require("./scraper");
 const utils = require("./utils");
-const tf = require("@tensorflow/tfjs-node-gpu");
+// const tf = require("@tensorflow/tfjs-node-gpu");
 
 async function start() {
+  const lake = "Greenwood Reservoir";
+  const startPos = { lat: 46.47745, lng: -87.8547 };
+  const endPos = { lat: 46.44036, lng: -87.7958 };
+
   await console.time("Loading Base Image...");
   const baseImage = await loadBaseImage();
   await console.timeEnd("Loading Base Image...");
@@ -40,6 +45,9 @@ async function start() {
     await trainModel(model, inputs, outputs);
     await console.timeEnd("Training model...");
   }
+
+  let asdf = await scrapeLake(lake, startPos, endPos);
+  await console.log(asdf);
 }
 
 start();
