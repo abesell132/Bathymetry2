@@ -320,7 +320,7 @@ module.exports = feedToNeuralNetwork = async (lakeImages) => {
           let label = labelList[index];
           predictions.push(label);
 
-          console.log("x: " + x + " | y: " + y + " | xImg: " + imgX + " | yImg: " + imgY + " | label: " + label);
+          // console.log("x: " + x + " | y: " + y + " | xImg: " + imgX + " | yImg: " + imgY + " | label: " + label);
         });
       }
       //     }
@@ -335,8 +335,6 @@ function loadNearbyImages(nearbyImages) {
       for (let b = 0; b < 3; b++) {
         if (nearbyImages[a][b] !== null) {
           nearbyImages[a][b] = await loadImage(nearbyImages[a][b]);
-        } else {
-          console.log(null);
         }
       }
     }
@@ -345,13 +343,9 @@ function loadNearbyImages(nearbyImages) {
 }
 
 function loadImage(path) {
-  console.log("loading image: " + path);
   return new Promise((resolve, reject) => {
     Jimp.read(path)
       .then((image) => {
-        console.log(image.bitmap.width);
-        console.log(image.bitmap.height);
-        console.log("image loaded");
         resolve(image);
       })
       .catch((err) => {
