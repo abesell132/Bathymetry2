@@ -83,10 +83,12 @@ module.exports = feedToNeuralNetwork = async (lakeImages) => {
   nearbyImages = await loadNearbyImages(nearbyImages);
   await console.timeEnd("load images");
 
-  for (let a; startPixelY < endPixelY; startPixelY++) {
-    for (let b; startPixelX < endPixelX; startPixelX++) {
-      let x = await startPixelX;
-      let y = await startPixelY;
+  for (let a = startPixelY; a < endPixelY; a++) {
+    for (let b = startPixelX; b < endPixelX; b++) {
+      let x = await b;
+      let y = await a;
+
+      await console.log("x: " + x + " | y: " + y);
 
       let m2m2 = await [x - 2, y - 2]; // [0,0] -> [-2,-2]
       let zm2 = await [x, y - 2]; // [2,1]-> [0,-1]
@@ -320,7 +322,7 @@ module.exports = feedToNeuralNetwork = async (lakeImages) => {
           let label = labelList[index];
           predictions.push(label);
 
-          fs.appendFileSync("./file.log", "Type: " + label + " | " + imgX + " " + imgY + " " + startPixelX + " " + startPixelY);
+          fs.appendFileSync("./file.log", "Type: " + label + " | " + imgX + " " + imgY + " " + b + " " + a);
         });
       }
       //     }
