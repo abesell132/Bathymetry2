@@ -53,7 +53,9 @@ async function start() {
   let lakeImages = await scrapeLake(lake, startPos, endPos);
   await console.timeEnd("Scraping Lake...");
 
+  await console.time("Feeding Image to Neural Network...");
   await feedToNeuralNetwork(lakeImages);
+  await console.timeEnd("Feeding Image to Neural Network...");
 }
 
 start();
