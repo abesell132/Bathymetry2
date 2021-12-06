@@ -313,7 +313,6 @@ module.exports = feedToNeuralNetwork = async (lakeImages) => {
               p2p2Color.b,
             ],
           ]);
-          const fs = require("fs");
           const labelList = ["land", "water", "depthLine", "depthNumber"];
           let results = model.predict(input);
           let argMax = results.argMax(1);
