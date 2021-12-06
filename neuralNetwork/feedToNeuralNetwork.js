@@ -84,7 +84,7 @@ module.exports = feedToNeuralNetwork = async (lakeImages) => {
   await console.timeEnd("load images");
 
   for (let a; startPixelY < endPixelY; startPixelY++) {
-    console.log(startPixelY);
+    await console.log(startPixelY);
     for (let b; startPixelX < endPixelX; startPixelX++) {
       let x = await startPixelX;
       let y = await startPixelY;
@@ -319,15 +319,17 @@ module.exports = feedToNeuralNetwork = async (lakeImages) => {
           let argMax = results.argMax(1);
           let index = argMax.dataSync()[0];
           let label = labelList[index];
-          console.log(predictions.length);
+          predictions.push(label);
+
           fs.appendFileSync("./file.log", "Type: " + label + " | " + imgX + " " + imgY + " " + startPixelX + " " + startPixelY);
         });
-        awaitpredictions.push(label);
       }
       //     }
       //   }
     }
   }
+
+  await console.log(predictions.length);
 };
 
 function loadNearbyImages(nearbyImages) {
