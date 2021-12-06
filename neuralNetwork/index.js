@@ -6,7 +6,7 @@ module.exports = NeuralNetwork = {
 
     let model = tf.sequential();
 
-    let hiddenLayer = tf.layers.dense({ units: 15, inputShape: [51], activation: "sigmoid" });
+    let hiddenLayer = tf.layers.dense({ units: 40, inputShape: [51], activation: "sigmoid" });
     let outputLayer = tf.layers.dense({ units: 4, activation: "softmax" });
 
     model.add(hiddenLayer);

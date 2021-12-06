@@ -320,7 +320,7 @@ module.exports = feedToNeuralNetwork = async (lakeImages) => {
           let label = labelList[index];
           predictions.push(label);
 
-          console.log("x: " + x + " | y: " + y + " | xImg: " + imgX + " | yImg: " + imgY);
+          console.log("x: " + x + " | y: " + y + " | xImg: " + imgX + " | yImg: " + imgY + " | label: " + label);
         });
       }
       //     }
