@@ -323,7 +323,7 @@ module.exports = feedToNeuralNetwork = async (lakeImages) => {
 
           let timeEnd = new Date().getTime();
 
-          console.log(timeEnd - startTime);
+          console.info("Execution time: %dms", timeEnd - startTime);
 
           // console.log("x: " + x + " | y: " + y + " | xImg: " + imgX + " | yImg: " + imgY + " | label: " + label);
         });
