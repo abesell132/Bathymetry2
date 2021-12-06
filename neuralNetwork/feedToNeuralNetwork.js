@@ -85,6 +85,7 @@ module.exports = feedToNeuralNetwork = async (lakeImages) => {
 
   for (let a = startPixelY; a < endPixelY; a++) {
     for (let b = startPixelX; b < endPixelX; b++) {
+      let startTime = new Date().getTime();
       let x = await b;
       let y = await a;
 
@@ -319,6 +320,10 @@ module.exports = feedToNeuralNetwork = async (lakeImages) => {
           let index = argMax.dataSync()[0];
           let label = labelList[index];
           predictions.push(label);
+
+          let timeEnd = new Date().getTime();
+
+          console.log(timeEnd - startTime);
 
           // console.log("x: " + x + " | y: " + y + " | xImg: " + imgX + " | yImg: " + imgY + " | label: " + label);
         });
