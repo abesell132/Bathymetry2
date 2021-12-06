@@ -349,6 +349,8 @@ function loadImage(path) {
   return new Promise((resolve, reject) => {
     Jimp.read(path)
       .then((image) => {
+        console.log(image.bitmap.width);
+        console.log(image.bitmap.height);
         console.log("image loaded");
         resolve(image);
       })
