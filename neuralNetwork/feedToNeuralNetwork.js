@@ -323,7 +323,7 @@ module.exports = feedToNeuralNetwork = async (lakeImages) => {
 
           let hrend = process.hrtime(hrstart);
 
-          console.info("Execution time: %ds %dms", hrend[0], hrend[1] / 1000000);
+          console.log(process.memoryUsage().heapUsed / 1024 / 1024 / 1024);
 
           // console.log("x: " + x + " | y: " + y + " | xImg: " + imgX + " | yImg: " + imgY + " | label: " + label);
         });

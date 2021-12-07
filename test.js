@@ -1,23 +1,4 @@
-const feedToNeuralNetwork = require("./neuralNetwork/feedToNeuralNetwork.js");
+// Requiring module
 
-async function start() {
-  feedToNeuralNetwork({
-    imageDir: "./lakes/GreenwoodReservoir",
-    totalCol: 48,
-    totalRow: 4,
-  });
-}
-
-// start();
-
-async function test() {
-  console.time("test");
-  for (let a = 0; a < 1799040; a++) {
-    for (let b = 0; b < 800; b++) {
-      c = a * Math.random();
-    }
-  }
-  console.timeEnd("test");
-}
-
-test();
+// Prints the output as an object
+console.log(process.memoryUsage().heapUsed / 1024 / 1024 / 1024);
